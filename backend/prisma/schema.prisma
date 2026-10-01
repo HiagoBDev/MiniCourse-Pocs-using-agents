@@ -1,0 +1,11 @@
+// Prisma 7: a URL de conexão fica em prisma.config.ts (DATABASE_URL).
+// Sem models por enquanto — o domínio ainda não foi definido.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}

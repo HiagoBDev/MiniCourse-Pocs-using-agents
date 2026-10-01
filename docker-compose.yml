@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: triagem-backend
+    ports:
+      - "3333:3333"
+    env_file: .env
+    environment:
+      NODE_ENV: development
+    volumes:
+      # Código-fonte para hot reload (tsx watch)
+      - ./backend:/app
+      # Mantém o node_modules do container (não usa o do host)
+      - /app/node_modules
+      # Persistência do SQLite
+      - backend-db:/app/prisma/data
+    command: sh -c "npm run prisma:generate && npm run dev"
+    restart: unless-stopped
+
+volumes:
+  backend-db:
