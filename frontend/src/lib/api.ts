@@ -42,7 +42,38 @@ export const api = {
     request<T>(path, { ...init, method: 'POST', body: JSON.stringify(data) }),
 }
 
-export type HealthResponse = {
-  status: 'ok'
-  db: 'ok' | 'error'
+// Espelha a entidade Ticket do backend (backend/src/domain/entities/ticket.ts).
+export type Categoria = 'BUG' | 'COBRANCA' | 'ACESSO' | 'DUVIDA' | 'SUGESTAO'
+export type Prioridade = 'BAIXA' | 'MEDIA' | 'ALTA' | 'URGENTE'
+export type Sentimento = 'POSITIVO' | 'NEUTRO' | 'NEGATIVO'
+export type StatusTriagem = 'CONCLUIDA' | 'PARCIAL' | 'FALHA'
+
+export type Ticket = {
+  id: string
+  titulo: string | null
+  descricao: string
+  resumo: string | null
+  categoria: Categoria | null
+  categoriaConfianca: number | null
+  prioridade: Prioridade | null
+  prioridadeConfianca: number | null
+  sentimento: Sentimento | null
+  sentimentoConfianca: number | null
+  requerRevisao: boolean
+  statusTriagem: StatusTriagem
+  erroResumo: string | null
+  erroClassificacao: string | null
+  duracaoMs: number
+  createdAt: string
+}
+
+export type CreateTicketInput = {
+  titulo?: string
+  descricao: string
+}
+
+export const ticketsApi = {
+  create: (input: CreateTicketInput) => api.post<Ticket>('/tickets', input),
+  list: () => api.get<Ticket[]>('/tickets'),
+  get: (id: string) => api.get<Ticket>(`/tickets/${encodeURIComponent(id)}`),
 }

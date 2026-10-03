@@ -1,4 +1,5 @@
 import type { ErrorRequestHandler, RequestHandler } from "express";
+import { TicketNotFoundError } from "../../../domain/errors/ticket-not-found.error.js";
 import { HttpError } from "../../../shared/errors/http-error.js";
 
 export const notFoundHandler: RequestHandler = (req, _res, next) => {
@@ -8,6 +9,11 @@ export const notFoundHandler: RequestHandler = (req, _res, next) => {
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof HttpError) {
     res.status(err.statusCode).json({ error: { message: err.message } });
+    return;
+  }
+
+  if (err instanceof TicketNotFoundError) {
+    res.status(404).json({ error: { message: err.message } });
     return;
   }
 

@@ -21,4 +21,4 @@ RUN mkdir -p prisma/data
 
 EXPOSE 3333
 
-CMD ["sh", "-c", "npm run prisma:generate && npm run dev"]
+CMD ["sh", "-c", "npm run prisma:generate && npm run prisma:migrate && npm run dev"]

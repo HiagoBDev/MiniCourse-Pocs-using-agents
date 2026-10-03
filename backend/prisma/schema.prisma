@@ -1,5 +1,6 @@
 // Prisma 7: a URL de conexão fica em prisma.config.ts (DATABASE_URL).
-// Sem models por enquanto — o domínio ainda não foi definido.
+// Valores de categoria/prioridade/sentimento/status são String (SQLite não tem enum);
+// as opções válidas ficam em src/domain/entities/ticket.ts.
 
 generator client {
   provider = "prisma-client"
@@ -8,4 +9,25 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+}
+
+model Ticket {
+  id                  String   @id @default(cuid())
+  titulo              String?
+  descricao           String
+  resumo              String?
+  categoria           String?
+  categoriaConfianca  Float?
+  prioridade          String?
+  prioridadeConfianca Float?
+  sentimento          String?
+  sentimentoConfianca Float?
+  requerRevisao       Boolean
+  statusTriagem       String
+  erroResumo          String?
+  erroClassificacao   String?
+  duracaoMs           Int
+  createdAt           DateTime @default(now())
+
+  @@index([createdAt])
 }

@@ -9,8 +9,9 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   PORT: z.coerce.number().int().positive().default(3333),
   DATABASE_URL: z.string().min(1),
-  // Ainda não utilizadas — apenas declaradas para as integrações futuras.
+  // Opcionais para o servidor subir sem elas; a triagem registra a falha do modelo correspondente.
   GEMINI_API_KEY: z.string().min(1).optional(),
+  GEMINI_MODEL: z.string().min(1).default("gemini-3.8-flash"),
   JEV_API_KEY: z.string().min(1).optional(),
 });
 

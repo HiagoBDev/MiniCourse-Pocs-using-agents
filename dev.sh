@@ -50,7 +50,7 @@ else
     echo "→ Instalando dependências do backend..."
     (cd backend && npm install)
   fi
-  (cd backend && npm run prisma:generate >/dev/null)
+  (cd backend && npm run prisma:generate >/dev/null && npm run prisma:migrate >/dev/null)
   echo "→ Subindo backend local..."
   (cd backend && npm run dev 2>&1 | sed -u 's/^/[api] /') &
   BACKEND_PID=$!

@@ -15,7 +15,7 @@ services:
       - /app/node_modules
       # Persistência do SQLite
       - backend-db:/app/prisma/data
-    command: sh -c "npm run prisma:generate && npm run dev"
+    command: sh -c "npm run prisma:generate && npm run prisma:migrate && npm run dev"
     restart: unless-stopped
 
 volumes:
